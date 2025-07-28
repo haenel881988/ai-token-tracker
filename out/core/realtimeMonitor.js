@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RealtimeTokenMonitor = void 0;
 const vscode = __importStar(require("vscode"));
 const modelConfig_1 = require("./modelConfig");
+const copilotDetector_1 = require("./copilotDetector");
 class RealtimeTokenMonitor {
     constructor(scopeManager, tokenCounter) {
         this.scopeManager = scopeManager;
@@ -49,6 +50,7 @@ class RealtimeTokenMonitor {
         this.chatStartTime = new Date();
         this.lastRecommendationTime = new Date(0);
         this.currentModel = modelConfig_1.ModelDetector.detectCurrentModel();
+        this.copilotDetector = new copilotDetector_1.CopilotChatDetector();
         this.startRealtimeMonitoring();
     }
     /**
@@ -97,6 +99,7 @@ class RealtimeTokenMonitor {
             maxTokens: this.currentModel.maxTokens,
             percentage: (fileTokens / this.currentModel.maxTokens) * 100,
             model: this.currentModel,
+            copilotState: this.copilotDetector.getCurrentState(),
             chatRecommendation,
             fileComplexity,
             estimatedCost

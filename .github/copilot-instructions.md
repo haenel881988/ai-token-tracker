@@ -3,6 +3,25 @@
 ## 🎯 Projektziel
 Eine VS Code Extension, die als "Kilometerzähler für Tokens" fungiert und Entwicklern hilft, Token-Verbrauch zu überwachen, bevor AI-Halluzinationen auftreten.
 
+## 🤖 AI Token Tracker Integration
+
+### **WICHTIG: Token-Überwachung verwenden**
+
+Vor jeder Code-Änderung und bei komplexen Aufgaben:
+1. **Token-Status prüfen**: Schaue auf die AI Token Tracker Anzeige
+2. **Bei >75% Token-Auslastung**: Aufgabe automatisch splitten
+3. **Anleitung befolgen**: Siehe `.github/ai_token_tracker/token-tracker.md`
+
+### **Automatische Token-Optimierung:**
+- Extension sendet automatisch Token-Updates an diesen Chat
+- Bei kritischen Limits: Sofortiger Chat-Neustart empfohlen
+- Scope-basierte Modularisierung verwenden
+
+**Anleitung für optimale Token-Nutzung:**
+📖 `.github/ai_token_tracker/token-tracker.md`
+
+---
+
 ## 🤖 AI-Integration Rules für Copilot
 
 ### **WICHTIGE TOKEN-REGELN FÜR AI:**

@@ -9,12 +9,14 @@ import * as vscode from 'vscode';
 import { ScopeManager } from './scopeManager';
 import { TokenCounter } from './tokenCounter';
 import { ModelDetector, ChatRecommendationEngine, AIModelConfig } from './modelConfig';
+import { CopilotChatDetector, CopilotChatState } from './copilotDetector';
 
 export interface RealtimeTokenData {
     currentTokens: number;
     maxTokens: number;
     percentage: number;
     model: AIModelConfig;
+    copilotState: CopilotChatState;
     chatRecommendation: any;
     fileComplexity: number;
     estimatedCost: number;
@@ -22,6 +24,7 @@ export interface RealtimeTokenData {
 
 export class RealtimeTokenMonitor {
     private currentModel: AIModelConfig;
+    private copilotDetector: CopilotChatDetector;
     private monitoringInterval: NodeJS.Timeout | undefined;
     private chatStartTime: Date = new Date();
     private lastRecommendationTime: Date = new Date(0);
@@ -31,6 +34,7 @@ export class RealtimeTokenMonitor {
         private tokenCounter: TokenCounter
     ) {
         this.currentModel = ModelDetector.detectCurrentModel();
+        this.copilotDetector = new CopilotChatDetector();
         this.startRealtimeMonitoring();
     }
 
@@ -95,6 +99,7 @@ export class RealtimeTokenMonitor {
             maxTokens: this.currentModel.maxTokens,
             percentage: (fileTokens / this.currentModel.maxTokens) * 100,
             model: this.currentModel,
+            copilotState: this.copilotDetector.getCurrentState(),
             chatRecommendation,
             fileComplexity,
             estimatedCost

@@ -61,6 +61,30 @@
         "command": "aiTokenTracker.createScope",
         "title": "Neuen Scope erstellen",
         "category": "AI Token Tracker"
+      },
+      {
+        "command": "aiTokenTracker.toggleCopilotIntegration",
+        "title": "🤖 Copilot Auto-Konsolidierung ein/aus",
+        "category": "AI Token Tracker",
+        "icon": "$(robot)"
+      },
+      {
+        "command": "aiTokenTracker.manualCopilotConsolidation",
+        "title": "📊 Manuelle Copilot Konsolidierung", 
+        "category": "AI Token Tracker",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "aiTokenTracker.modularizeProject", 
+        "title": "🏗️ Projekt modularisieren",
+        "category": "AI Token Tracker",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "aiTokenTracker.createGithubSetup",
+        "title": "⚙️ GitHub Setup erstellen", 
+        "category": "AI Token Tracker",
+        "icon": "$(github)"
       }
     ],
     "configuration": {

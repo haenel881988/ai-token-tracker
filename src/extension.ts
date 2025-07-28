@@ -3,6 +3,8 @@ import { ScopeManager } from './core/scopeManager';
 import { TokenCounter } from './core/tokenCounter';
 import { ConfigManager } from './core/configManager';
 import { RealtimeTokenMonitor } from './core/realtimeMonitor';
+import { CopilotAutoConsolidator } from './core/copilotIntegration';
+import { ProjectSetupManager } from './core/projectSetupManager';
 import { StatusBarManager } from './ui/statusBar';
 import { NotificationManager } from './ui/notifications';
 import { Logger } from './utils/logger';
@@ -24,6 +26,8 @@ let scopeManager: ScopeManager;
 let tokenCounter: TokenCounter;
 let configManager: ConfigManager;
 let realtimeMonitor: RealtimeTokenMonitor;
+let copilotAutoConsolidator: CopilotAutoConsolidator;
+let projectSetupManager: ProjectSetupManager;
 let statusBarManager: StatusBarManager;
 let notificationManager: NotificationManager;
 let logger: Logger;
@@ -32,6 +36,19 @@ export function activate(context: vscode.ExtensionContext) {
     logger = new Logger('AI Token Tracker');
     logger.info('Extension wird aktiviert...');
 
+    // Workspace-Pfad ermitteln
+    const workspacePath = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+    if (!workspacePath) {
+        vscode.window.showErrorMessage('Kein Workspace-Ordner gefunden!');
+        return;
+    }
+
+    // Project Setup Manager initialisieren und automatisches Setup ausführen
+    projectSetupManager = new ProjectSetupManager(workspacePath);
+    projectSetupManager.setupProjectStructure().catch(error => {
+        console.error('Automatisches Setup fehlgeschlagen:', error);
+    });
+
     // Core Module initialisieren
     configManager = new ConfigManager();
     tokenCounter = new TokenCounter();
@@ -39,6 +56,9 @@ export function activate(context: vscode.ExtensionContext) {
     
     // Echtzeit-Monitor starten
     realtimeMonitor = new RealtimeTokenMonitor(scopeManager, tokenCounter);
+    
+    // Copilot Auto-Konsolidierung aktivieren
+    copilotAutoConsolidator = new CopilotAutoConsolidator(scopeManager, tokenCounter);
     
     // UI Module initialisieren
     statusBarManager = new StatusBarManager(scopeManager);
@@ -63,6 +83,7 @@ export function deactivate() {
     statusBarManager?.dispose();
     scopeManager?.dispose();
     realtimeMonitor?.dispose();
+    copilotAutoConsolidator?.dispose();
     
     logger.info('Extension deaktiviert.');
 }
@@ -93,7 +114,54 @@ function registerCommands(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(showDashboard, resetCounters, createScope);
+    // Copilot Auto-Konsolidierung ein/aus
+    const toggleCopilotIntegration = vscode.commands.registerCommand('aiTokenTracker.toggleCopilotIntegration', async () => {
+        const currentState = copilotAutoConsolidator ? 'aktiviert' : 'deaktiviert';
+        const newState = currentState === 'aktiviert' ? 'deaktiviert' : 'aktiviert';
+        
+        if (copilotAutoConsolidator) {
+            copilotAutoConsolidator.setEnabled(newState === 'aktiviert');
+        }
+        
+        vscode.window.showInformationMessage(`🤖 Copilot Auto-Konsolidierung ${newState}`);
+    });
+
+    // Manuelle Copilot Konsolidierung
+    const manualCopilotConsolidation = vscode.commands.registerCommand('aiTokenTracker.manualCopilotConsolidation', async () => {
+        if (copilotAutoConsolidator) {
+            await copilotAutoConsolidator.manualConsolidation();
+        } else {
+            vscode.window.showWarningMessage('Copilot Integration nicht verfügbar');
+        }
+    });
+
+    // Projekt modularisieren
+    const modularizeProject = vscode.commands.registerCommand('aiTokenTracker.modularizeProject', async () => {
+        if (projectSetupManager) {
+            await projectSetupManager.createModularizationWorkflow();
+        } else {
+            vscode.window.showWarningMessage('Project Setup Manager nicht verfügbar');
+        }
+    });
+
+    // GitHub Setup erstellen
+    const createGithubSetup = vscode.commands.registerCommand('aiTokenTracker.createGithubSetup', async () => {
+        if (projectSetupManager) {
+            await projectSetupManager.setupProjectStructure();
+        } else {
+            vscode.window.showWarningMessage('Project Setup Manager nicht verfügbar');
+        }
+    });
+
+    context.subscriptions.push(
+        showDashboard, 
+        resetCounters, 
+        createScope, 
+        toggleCopilotIntegration, 
+        manualCopilotConsolidation,
+        modularizeProject,
+        createGithubSetup
+    );
 }
 
 function registerEventListeners(context: vscode.ExtensionContext) {

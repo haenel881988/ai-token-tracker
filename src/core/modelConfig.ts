@@ -143,27 +143,105 @@ export const AI_MODELS: Record<string, AIModelConfig> = {
     },
 
     // Platzhalter für weitere Modelle
-    'gpt-4.1-placeholder': {
-        name: 'GPT-4.1 (Placeholder)',
+    'gpt-4.1': {
+        name: 'GPT-4.1',
         provider: 'openai',
-        maxTokens: 200000, // PLACEHOLDER - Exakte Werte folgen
+        maxTokens: 64000, // Exakte Werte wie gewünscht
+        inputTokens: 64000,
+        outputTokens: 8192,
+        contextWindow: 64000,
+        costPer1kTokens: 0.015, // Geschätzt
+        warningThreshold: 0.75,
+        criticalThreshold: 0.90,
+        recommendedSplit: 16000
+    },
+
+    'claude-sonnet-3.5': {
+        name: 'Claude Sonnet 3.5',
+        provider: 'anthropic',
+        maxTokens: 200000,
         inputTokens: 200000,
         outputTokens: 8192,
         contextWindow: 200000,
-        costPer1kTokens: 0.01, // PLACEHOLDER
-        warningThreshold: 0.75,
-        criticalThreshold: 0.90,
+        costPer1kTokens: 0.003,
+        warningThreshold: 0.80,
+        criticalThreshold: 0.92,
         recommendedSplit: 50000
     },
 
-    'gemini-pro': {
-        name: 'Gemini Pro',
+    'claude-sonnet-3.7': {
+        name: 'Claude Sonnet 3.7',
+        provider: 'anthropic',
+        maxTokens: 200000,
+        inputTokens: 200000,
+        outputTokens: 8192,
+        contextWindow: 200000,
+        costPer1kTokens: 0.0025, // Verbesserte Version
+        warningThreshold: 0.80,
+        criticalThreshold: 0.92,
+        recommendedSplit: 50000
+    },
+
+    'claude-sonnet-4': {
+        name: 'Claude Sonnet 4',
+        provider: 'anthropic',
+        maxTokens: 200000, // Wie gewünscht
+        inputTokens: 200000,
+        outputTokens: 16384, // Höhere Output-Kapazität
+        contextWindow: 200000,
+        costPer1kTokens: 0.005, // Premium-Modell
+        warningThreshold: 0.80,
+        criticalThreshold: 0.92,
+        recommendedSplit: 50000
+    },
+
+    'gemini-2.5-pro': {
+        name: 'Gemini 2.5 Pro',
         provider: 'google',
-        maxTokens: 32768, // PLACEHOLDER
+        maxTokens: 1000000, // 1 Million Tokens!
+        inputTokens: 1000000,
+        outputTokens: 32768,
+        contextWindow: 1000000,
+        costPer1kTokens: 0.002, // Günstig für große Kontexte
+        warningThreshold: 0.85, // Höher wegen großem Kontext
+        criticalThreshold: 0.95,
+        recommendedSplit: 250000 // 250k Chunks
+    },
+
+    'o4-mini-preview': {
+        name: 'o4-mini (Preview)',
+        provider: 'openai',
+        maxTokens: 32000, // Preview-Limit
+        inputTokens: 32000,
+        outputTokens: 4096,
+        contextWindow: 32000,
+        costPer1kTokens: 0.001, // Günstig für Tests
+        warningThreshold: 0.75,
+        criticalThreshold: 0.90,
+        recommendedSplit: 8000
+    },
+
+    'gpt-4.1-placeholder': {
+        name: 'GPT-4.1 (Legacy)',
+        provider: 'openai',
+        maxTokens: 64000, // Updated zu den exakten Werten
+        inputTokens: 64000,
+        outputTokens: 8192,
+        contextWindow: 64000,
+        costPer1kTokens: 0.015,
+        warningThreshold: 0.75,
+        criticalThreshold: 0.90,
+        recommendedSplit: 16000
+    },
+
+    'gemini-pro': {
+        name: 'Gemini Pro (Legacy)',
+        provider: 'google',
+        maxTokens: 32768,
         inputTokens: 32768,
         outputTokens: 8192,
         contextWindow: 32768,
-        costPer1kTokens: 0.001, // PLACEHOLDER
+        costPer1kTokens: 0.001,
         warningThreshold: 0.75,
         criticalThreshold: 0.90,
         recommendedSplit: 8000
