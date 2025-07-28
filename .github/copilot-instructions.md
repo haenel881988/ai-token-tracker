@@ -16,9 +16,13 @@ Vor jeder Code-Änderung und bei komplexen Aufgaben:
 - Extension sendet automatisch Token-Updates an diesen Chat
 - Bei kritischen Limits: Sofortiger Chat-Neustart empfohlen
 - Scope-basierte Modularisierung verwenden
+- **TOKEN-LIMIT: 64.000 Tokens** (wie angefordert)
 
 **Anleitung für optimale Token-Nutzung:**
 📖 `.github/ai_token_tracker/token-tracker.md`
+
+**Komplexitäts-Management & Redundanz-Kontrolle:**
+📋 `.github/complexity_management/WORKFLOW_RULES.md`
 
 ---
 

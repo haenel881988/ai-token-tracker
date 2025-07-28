@@ -5,6 +5,7 @@ import { ConfigManager } from './core/configManager';
 import { RealtimeTokenMonitor } from './core/realtimeMonitor';
 import { CopilotAutoConsolidator } from './core/copilotIntegration';
 import { ProjectSetupManager } from './core/projectSetupManager';
+import { ComplexityManager } from './core/complexityManager';
 import { StatusBarManager } from './ui/statusBar';
 import { NotificationManager } from './ui/notifications';
 import { Logger } from './utils/logger';
@@ -28,6 +29,7 @@ let configManager: ConfigManager;
 let realtimeMonitor: RealtimeTokenMonitor;
 let copilotAutoConsolidator: CopilotAutoConsolidator;
 let projectSetupManager: ProjectSetupManager;
+let complexityManager: ComplexityManager;
 let statusBarManager: StatusBarManager;
 let notificationManager: NotificationManager;
 let logger: Logger;
@@ -48,6 +50,9 @@ export function activate(context: vscode.ExtensionContext) {
     projectSetupManager.setupProjectStructure().catch(error => {
         console.error('Automatisches Setup fehlgeschlagen:', error);
     });
+
+    // Complexity Manager initialisieren
+    complexityManager = new ComplexityManager(workspacePath, tokenCounter);
 
     // Core Module initialisieren
     configManager = new ConfigManager();
@@ -153,6 +158,42 @@ function registerCommands(context: vscode.ExtensionContext) {
         }
     });
 
+    // Komplexitäts-Analyse durchführen
+    const analyzeComplexity = vscode.commands.registerCommand('aiTokenTracker.analyzeComplexity', async () => {
+        if (complexityManager) {
+            vscode.window.showInformationMessage('🔍 Starte Komplexitäts-Analyse...');
+            const metrics = await complexityManager.analyzeProjectComplexity();
+            
+            const message = `📊 Analyse abgeschlossen!\n` +
+                          `Komplexität: ${(metrics.complexityScore * 100).toFixed(1)}%\n` +
+                          `Token-Hotspots: ${metrics.tokenHotspots.length}\n` +
+                          `Redundanzen: ${metrics.redundantContent.length}`;
+                          
+            vscode.window.showInformationMessage(message, 'Report anzeigen').then(selection => {
+                if (selection) {
+                    // Report öffnen
+                }
+            });
+        } else {
+            vscode.window.showWarningMessage('Complexity Manager nicht verfügbar');
+        }
+    });
+
+    // Duplikate finden
+    const findDuplicates = vscode.commands.registerCommand('aiTokenTracker.findDuplicates', async () => {
+        if (complexityManager) {
+            vscode.window.showInformationMessage('🔍 Suche nach Duplikaten...');
+            const metrics = await complexityManager.analyzeProjectComplexity();
+            
+            if (metrics.duplicateFiles.length > 0) {
+                const message = `🔄 ${metrics.duplicateFiles.length} Duplikate gefunden!`;
+                vscode.window.showWarningMessage(message, 'Details anzeigen');
+            } else {
+                vscode.window.showInformationMessage('✅ Keine Duplikate gefunden!');
+            }
+        }
+    });
+
     context.subscriptions.push(
         showDashboard, 
         resetCounters, 
@@ -160,7 +201,9 @@ function registerCommands(context: vscode.ExtensionContext) {
         toggleCopilotIntegration, 
         manualCopilotConsolidation,
         modularizeProject,
-        createGithubSetup
+        createGithubSetup,
+        analyzeComplexity,
+        findDuplicates
     );
 }
 

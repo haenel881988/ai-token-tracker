@@ -85,6 +85,18 @@
         "title": "⚙️ GitHub Setup erstellen", 
         "category": "AI Token Tracker",
         "icon": "$(github)"
+      },
+      {
+        "command": "aiTokenTracker.analyzeComplexity",
+        "title": "🔍 Komplexitäts-Analyse",
+        "category": "AI Token Tracker", 
+        "icon": "$(search)"
+      },
+      {
+        "command": "aiTokenTracker.findDuplicates",
+        "title": "🔄 Duplikate finden",
+        "category": "AI Token Tracker",
+        "icon": "$(files)"
       }
     ],
     "configuration": {
