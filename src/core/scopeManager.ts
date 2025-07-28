@@ -31,7 +31,7 @@ export class ScopeManager implements IScopeManager {
             id,
             name: config.name,
             type: config.type,
-            maxTokens: config.maxTokens || this.configManager.get('defaultMaxTokens', 8000),
+            maxTokens: config.maxTokens || this.configManager.get('defaultMaxTokens', 64000),
             currentTokens: 0,
             warningThreshold: config.warningThreshold || this.configManager.get('warningThreshold', 0.8),
             files: config.files || [],

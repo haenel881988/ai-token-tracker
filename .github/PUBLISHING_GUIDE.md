@@ -104,7 +104,7 @@ vsce login your-publisher-name
       "properties": {
         "aiTokenTracker.maxTokens": {
           "type": "number",
-          "default": 8000,
+          "default": 64000,
           "description": "Maximale Anzahl Tokens pro Scope"
         },
         "aiTokenTracker.warningThreshold": {
@@ -163,7 +163,7 @@ Verhindere AI-Halluzinationen, bevor sie entstehen. Diese Extension überwacht d
 
 ```json
 {
-  "aiTokenTracker.maxTokens": 8000,
+  "aiTokenTracker.maxTokens": 64000,
   "aiTokenTracker.warningThreshold": 0.8
 }
 ```

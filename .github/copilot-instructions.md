@@ -227,7 +227,7 @@ interface IScopeManager {
 ### Extension Configuration
 ```json
 {
-  "aiTokenTracker.defaultMaxTokens": 8000,
+  "aiTokenTracker.defaultMaxTokens": 64000,
   "aiTokenTracker.warningThreshold": 0.8,
   "aiTokenTracker.providers": ["copilot", "openai"],
   "aiTokenTracker.scopes": {

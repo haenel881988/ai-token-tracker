@@ -52,7 +52,7 @@ class TokenCounter {
         const history = this.usageHistory.get(scopeId) || [];
         const current = history.length > 0 ? history[history.length - 1] : 0;
         // TODO: maxTokens sollte aus Scope-Konfiguration kommen
-        const max = 8000; // Standard-Limit
+        const max = 64000; // Copilot Chat Token-Limit
         const percentage = max > 0 ? (current / max) * 100 : 0;
         const remaining = Math.max(0, max - current);
         const warningTriggered = percentage >= 80; // 80% Warnschwelle

@@ -3,189 +3,105 @@
 ## 📊 Projekt-Analyse (Automatisch generiert)
 
 ### Übersicht
-- **Gesamt-Dateien**: 15 TypeScript-Dateien
-- **Geschätzte Tokens**: 42,000 Tokens (grobe Schätzung)
-- **Token-Limit**: 64,000 (GPT-4.1)
-- **Auslastung**: 65.6%
-- **Status**: 🟡 WARNUNG - Modularisierung empfohlen
+- **Gesamt-Dateien**: 14
+- **Geschätzte Tokens**: 34,318
+- **Große Dateien (>2k Tokens)**: 9
+- **Modularisierung empfohlen**: JA
 
-### Token-Breakdown nach Modulen
+### Token-Breakdown
 ```
-src/core/                    ~24,000 Tokens (57%)
-├── extension.ts             ~3,200 Tokens
-├── tokenCounter.ts          ~4,800 Tokens  
-├── scopeManager.ts          ~5,200 Tokens
-├── realtimeMonitor.ts       ~4,200 Tokens
-├── copilotIntegration.ts    ~6,600 Tokens  ← KRITISCH!
-└── projectSetupManager.ts   ~6,200 Tokens  ← KRITISCH!
-
-src/ui/                      ~8,000 Tokens (19%)
-├── statusBar.ts             ~4,200 Tokens
-└── notifications.ts         ~3,800 Tokens
-
-docs/ & .github/             ~10,000 Tokens (24%)
+Token-Limit: 64,000 (GPT-4.1)
+Aktuell: 34,318
+Auslastung: 53.6%
+Status: 🟡 WARNUNG
 ```
-
-## 🚨 **KRITISCHE DATEIEN (>5k Tokens):**
-1. **copilotIntegration.ts** - 6,600 Tokens → SOFORT AUFTEILEN
-2. **projectSetupManager.ts** - 6,200 Tokens → SOFORT AUFTEILEN  
-3. **scopeManager.ts** - 5,200 Tokens → PRIORITÄT HOCH
 
 ## 📋 Modularisierungs-Aufgaben
 
-### 🔴 **PHASE 1: KRITISCHE AUFSPALTUNG (SOFORT)**
+### Phase 1: Projekt-Mapping (PRIORITY: HIGH)
+- [ ] **00_project_overview/**: Vollständige Projekt-Struktur dokumentieren
+- [ ] **00_project_overview/architecture.md**: Aktuelle Architektur analysieren
+- [ ] **00_project_overview/dependencies.md**: Abhängigkeiten kartieren
+- [ ] **00_project_overview/token_hotspots.md**: Token-intensive Bereiche identifizieren
 
-#### copilotIntegration.ts → Aufteilen in:
-- [ ] **01_core_modules/copilot_core.md**
-  - CopilotAutoConsolidator Basis-Klasse
-  - Event-Triggering Logic
-  - Rate-Limiting System
-  
-- [ ] **01_core_modules/copilot_messaging.md**
-  - Chat-Nachrichten Formatierung
-  - Multi-Channel Integration
-  - Fallback-Mechanismen
-  
-- [ ] **01_core_modules/copilot_recommendations.md**
-  - Empfehlungs-Engine
-  - Token-Summary Generation
-  - Action-Determination Logic
+### Phase 2: Core-Module aufteilen (PRIORITY: HIGH)
+- [ ] **01_core_modules/module_1.md**: src\core\complexityManager.ts modularisieren (4142 Tokens)
+- [ ] **01_core_modules/module_2.md**: src\core\copilotDetector.ts modularisieren (3029 Tokens)
+- [ ] **01_core_modules/module_3.md**: src\core\copilotIntegration.ts modularisieren (3683 Tokens)
+- [ ] **01_core_modules/module_4.md**: src\core\modelConfig.ts modularisieren (2577 Tokens)
+- [ ] **01_core_modules/module_5.md**: src\core\projectSetupManager.ts modularisieren (5159 Tokens)
+- [ ] **01_core_modules/module_6.md**: src\core\realtimeMonitor.ts modularisieren (2453 Tokens)
+- [ ] **01_core_modules/module_7.md**: src\core\scopeManager.ts modularisieren (2239 Tokens)
+- [ ] **01_core_modules/module_8.md**: src\extension.ts modularisieren (2442 Tokens)
+- [ ] **01_core_modules/module_9.md**: src\ui\statusBar.ts modularisieren (3791 Tokens)
 
-#### projectSetupManager.ts → Aufteilen in:
-- [ ] **01_core_modules/setup_core.md**
-  - ProjectSetupManager Basis
-  - GitHub-Struktur Creation
-  
-- [ ] **01_core_modules/setup_modularization.md**
-  - Modularisierungs-Workflow
-  - Project-Scanning Logic
-  
-- [ ] **01_core_modules/setup_templates.md**
-  - Template-Generation
-  - File-Content Creation
+### Phase 3: UI-Komponenten (PRIORITY: MEDIUM)
+- [ ] **02_ui_components/status_bar.md**: Status Bar Modularisierung
+- [ ] **02_ui_components/notifications.md**: Notification System
+- [ ] **02_ui_components/dashboard.md**: Dashboard Komponenten
 
-### 🟡 **PHASE 2: SCOPE-OPTIMIERUNG (DIESE WOCHE)**
+### Phase 4: Datenmodelle (PRIORITY: MEDIUM) 
+- [ ] **03_data_models/token_models.md**: Token-Datenstrukturen
+- [ ] **03_data_models/scope_models.md**: Scope-Management Modelle
+- [ ] **03_data_models/config_models.md**: Konfiguration-Modelle
 
-#### Core-Module strukturieren:
-- [ ] **00_project_overview/current_architecture.md**
-  - Vollständige Projekt-Dokumentation
-  - Token-Hotspot Mapping
-  - Abhängigkeits-Analyse
+### Phase 5: Utilities (PRIORITY: LOW)
+- [ ] **04_utilities/helpers.md**: Helper-Funktionen extrahieren
+- [ ] **04_utilities/constants.md**: Konstanten zentralisieren
+- [ ] **04_utilities/validators.md**: Validierung-Logic
 
-- [ ] **01_core_modules/token_management.md**
-  - TokenCounter + ScopeManager Integration
-  - RealtimeMonitor Optimierung
+### Phase 6: Tests & Dokumentation (PRIORITY: LOW)
+- [ ] **05_tests/unit_tests.md**: Unit-Test Strategie
+- [ ] **05_tests/integration_tests.md**: Integration-Tests
+- [ ] **06_documentation/api_docs.md**: API-Dokumentation
+- [ ] **06_documentation/user_guide.md**: User-Guide
 
-- [ ] **02_ui_components/status_display.md**
-  - StatusBar + Notifications Vereinigung
-  - UI-Event Handling
+### Phase 7: Integration (PRIORITY: CRITICAL)
+- [ ] **99_integration/merge_plan.md**: Merge-Strategie definieren
+- [ ] **99_integration/testing_plan.md**: Integrationstest-Plan
+- [ ] **99_integration/rollback_plan.md**: Rollback-Strategie
 
-### 🟢 **PHASE 3: FINE-TUNING (NÄCHSTE WOCHE)**
+## 🎯 SMART-Kriterien pro Phase
 
-#### Weitere Optimierungen:
-- [ ] **01_core_modules/config_management.md**
-  - ConfigManager Erweiterung
-  - Model-Configuration Logic
-  
-- [ ] **02_ui_components/webview_dashboard.md**
-  - Dashboard-Implementierung
-  - Interactive Components
+### Phase 1: Projekt-Mapping
+- **Specific**: Vollständige Dokumentation der aktuellen Struktur
+- **Measurable**: 100% aller Dateien erfasst
+- **Achievable**: 1-2 Tage Aufwand
+- **Relevant**: Basis für alle weiteren Schritte
+- **Time-bound**: Diese Woche abschließen
 
-## 🎯 **SMART-Aufgaben-Definition**
+### Phase 2: Core-Module
+- **Specific**: Große Dateien (>2k Tokens) aufteilen
+- **Measurable**: Alle 9 Dateien unter 1k Tokens
+- **Achievable**: Pro Datei 0.5-1 Tag
+- **Relevant**: Größte Token-Ersparnis
+- **Time-bound**: Nächste 2 Wochen
 
-### Phase 1 Task: copilotIntegration.ts aufteilen
+## 🚦 Token-Management Regeln
 
-**Rolle**: Senior TypeScript Refactoring Engineer
-**Ziel**: copilotIntegration.ts von 6,600 auf 3x ~2,200 Tokens aufteilen
-**Kontext**: VS Code Extension, Copilot Chat API Integration
-**Aktion**: 
-1. Klasse in 3 logische Module aufteilen
-2. Interfaces extrahieren
-3. Dependency Injection implementieren
-**Ergebnis**: 3 separate Dateien mit klaren Verantwortlichkeiten
-**Constraints**: 
-- Max 2,500 Tokens pro Datei
-- Keine Breaking Changes
-- Vollständige Test-Coverage
+### Beim Arbeiten an Modulen:
+1. **Vor Start**: Token-Status prüfen
+2. **Bei 50%**: Fokus auf aktuelles Modul
+3. **Bei 75%**: Sub-Module erstellen
+4. **Bei 90%**: Sofort neuen Chat/Scope starten
 
-### Phase 1 Task: projectSetupManager.ts aufteilen
-
-**Rolle**: DevOps & Setup Automation Engineer  
-**Ziel**: projectSetupManager.ts von 6,200 auf 3x ~2,000 Tokens aufteilen
-**Kontext**: Project-Setup, File-Generation, Template-System
-**Aktion**:
-1. Setup-Logic von Template-Logic trennen
-2. File-Operations in separate Utility verschieben
-3. Modularization-Workflow extrahieren
-**Ergebnis**: Modulare Setup-Pipeline mit klarer Trennung
-**Constraints**:
-- Max 2,000 Tokens pro Modul
-- Wiederverwendbare Komponenten
-- Konfigurierbare Templates
-
-## 🔄 **Automatische Token-Überwachung**
-
-### Bei 75% Auslastung pro Scope:
+### Automatische Scope-Erstellung:
 ```
-Aktueller Scope: 01_core_modules/
-Tokens: 15,200 / 20,000 (76%)
-Aktion: AUTOMATISCHES SUB-SCOPING
-
-Erstelle:
-01_core_modules/
+Bei Token-Überschreitung:
+Phase_X/
 ├── current_work.md
 ├── sub_tasks/
-│   ├── copilot_core.md
-│   ├── copilot_messaging.md  
-│   └── copilot_recommendations.md
+│   ├── task_a.md
+│   ├── task_b.md
+│   └── task_c.md
 └── completed/
-    └── analysis.md
+    └── done_tasks.md
 ```
-
-### Chat-Split Trigger:
-- **Bei 48,000 Tokens** (75% von 64k) → Neuer Chat
-- **Bei 57,600 Tokens** (90% von 64k) → SOFORTIGER Chat-Wechsel
-
-## 📊 **Token-Schätzungen nach Modularisierung**
-
-### Vor Modularisierung:
-```
-Größte Datei: 6,600 Tokens (copilotIntegration.ts)
-Durchschnitt: 2,800 Tokens pro Datei
-Kritische Dateien: 3 (>5k Tokens)
-```
-
-### Nach Modularisierung (Ziel):
-```
-Größte Datei: <2,500 Tokens
-Durchschnitt: <2,000 Tokens pro Datei  
-Kritische Dateien: 0
-Gesamt-Token-Ersparnis: ~20% durch bessere Strukturierung
-```
-
-## 🚀 **Nächste Schritte (SOFORT)**
-
-### Heute starten:
-1. ✅ **copilotIntegration.ts analysieren**
-2. ✅ **Aufspaltungs-Plan erstellen**
-3. ✅ **Erste Sub-Module extrahieren**
-
-### Diese Woche abschließen:
-4. ✅ **projectSetupManager.ts modularisieren**
-5. ✅ **Token-Tests durchführen**
-6. ✅ **Integration-Tests aktualisieren**
 
 ---
 
-## 🎯 **Erfolg-Kriterien**
+**Next Steps**: Beginne mit Phase 1 - Projekt-Mapping
+**Token-Ziel**: Unter 48,000 Tokens pro Scope (75% von 64k)
+**Update-Frequenz**: Täglich nach größeren Änderungen
 
-✅ **Alle Dateien unter 2,500 Tokens**
-✅ **Keine Funktionalitäts-Verluste**  
-✅ **Verbesserte Code-Struktur**
-✅ **Bessere Token-Effizienz**
-✅ **Einfachere Wartung**
-
-**Status**: 🟡 In Arbeit - Phase 1 kritische Aufspaltung gestartet
-**Update**: Täglich nach größeren Änderungen
-
-*Diese Modularisierungs-Roadmap wurde automatisch vom AI Token Tracker basierend auf der aktuellen Projekt-Struktur generiert.*
+*Diese Todo-Liste wurde automatisch vom AI Token Tracker generiert.*

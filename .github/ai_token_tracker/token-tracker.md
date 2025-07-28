@@ -10,8 +10,6 @@ Diese Anleitung erklärt der KI, wie der AI Token Tracker optimal zu verwenden i
 [🤖 45.2%] ← Live Token-Anzeige klicken für Details
 ```
 
-### **TOKEN-LIMIT: 64.000** (wie angefordert)
-
 ### Tooltip-Information
 - **Aktuelle Tokens**: z.B. 2,847 / 64,000
 - **Auslastung**: Prozentuale Anzeige
@@ -163,13 +161,3 @@ Ctrl+Shift+P → "AI Token Tracker: Manuelle Konsolidierung"
 5. ✅ Bei 90%+ sofort neuen Chat starten
 
 **Die Extension unterstützt dich automatisch - vertraue den Empfehlungen!** 🚀
-
-## 🔧 **Komplexitäts-Management**
-
-### **Radikale Fehlerbehandlung:**
-- **IMMER an der Wurzel ansetzen** - keine Symptom-Behandlung!
-- **Redundanzen eliminieren** - Null-Toleranz für Duplikate
-- **Ordnung beibehalten** - Kontinuierliche Inventarisierung
-- **Präventiv arbeiten** - Probleme vor Entstehung lösen
-
-**Detaillierte Regeln:** 📋 `.github/complexity_management/WORKFLOW_RULES.md`

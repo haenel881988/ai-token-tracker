@@ -57,7 +57,7 @@ Die Extension zeigt deinen aktuellen Token-Verbrauch direkt in der Status Bar:
 
 ```json
 {
-  "aiTokenTracker.defaultMaxTokens": 8000,
+  "aiTokenTracker.defaultMaxTokens": 64000,
   "aiTokenTracker.warningThreshold": 0.8,
   "aiTokenTracker.enabledProviders": ["copilot", "openai"],
   "aiTokenTracker.autoCreateScopes": true
@@ -68,7 +68,7 @@ Die Extension zeigt deinen aktuellen Token-Verbrauch direkt in der Status Bar:
 
 | Setting | Beschreibung | Standard |
 |---------|-------------|----------|
-| `defaultMaxTokens` | Maximale Tokens pro Scope | 8000 |
+| `defaultMaxTokens` | Maximale Tokens pro Scope | 64000 |
 | `warningThreshold` | Warnschwelle (0.8 = 80%) | 0.8 |
 | `enabledProviders` | Aktive AI-Provider | ["copilot", "openai"] |
 | `autoCreateScopes` | Auto-Erstellung von Scopes | true |

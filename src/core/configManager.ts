@@ -66,7 +66,7 @@ export class ConfigManager implements IConfigManager {
      */
     getDefaults() {
         return {
-            defaultMaxTokens: 8000,
+            defaultMaxTokens: 64000,
             warningThreshold: 0.8,
             enabledProviders: ['copilot', 'openai'],
             autoCreateScopes: true,
@@ -95,7 +95,7 @@ export class ConfigManager implements IConfigManager {
     validateConfig(): { isValid: boolean; errors: string[] } {
         const errors: string[] = [];
         
-        const maxTokens = this.get('defaultMaxTokens', 8000);
+        const maxTokens = this.get('defaultMaxTokens', 64000);
         if (maxTokens <= 0) {
             errors.push('defaultMaxTokens muss größer als 0 sein');
         }

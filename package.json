@@ -104,8 +104,8 @@
       "properties": {
         "aiTokenTracker.defaultMaxTokens": {
           "type": "number",
-          "default": 8000,
-          "description": "Maximale Anzahl Tokens pro Scope"
+          "default": 64000,
+          "description": "Maximale Anzahl Tokens pro Scope (64k für Copilot Chat)"
         },
         "aiTokenTracker.warningThreshold": {
           "type": "number",
