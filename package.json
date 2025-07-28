@@ -1,0 +1,141 @@
+{
+  "name": "ai-token-tracker",
+  "displayName": "AI Token Tracker",
+  "description": "Überwache deinen AI Token-Verbrauch und verhindere Halluzinationen",
+  "version": "0.1.1",
+  "publisher": "haenel881988",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "AI",
+    "Debuggers",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "tokens",
+    "copilot",
+    "openai",
+    "tracker",
+    "monitoring",
+    "hallucination",
+    "prevention",
+    "scope",
+    "modular"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haenel881988/ai-token-tracker"
+  },
+  "bugs": {
+    "url": "https://github.com/haenel881988/ai-token-tracker/issues"
+  },
+  "homepage": "https://github.com/haenel881988/ai-token-tracker#readme",
+  "license": "MIT",
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:python",
+    "onCommand:aiTokenTracker.showDashboard"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiTokenTracker.showDashboard",
+        "title": "Token Dashboard öffnen",
+        "category": "AI Token Tracker"
+      },
+      {
+        "command": "aiTokenTracker.resetCounters",
+        "title": "Token Zähler zurücksetzen",
+        "category": "AI Token Tracker"
+      },
+      {
+        "command": "aiTokenTracker.createScope",
+        "title": "Neuen Scope erstellen",
+        "category": "AI Token Tracker"
+      }
+    ],
+    "configuration": {
+      "title": "AI Token Tracker",
+      "properties": {
+        "aiTokenTracker.defaultMaxTokens": {
+          "type": "number",
+          "default": 8000,
+          "description": "Maximale Anzahl Tokens pro Scope"
+        },
+        "aiTokenTracker.warningThreshold": {
+          "type": "number",
+          "default": 0.8,
+          "description": "Warnschwelle (80% = 0.8)"
+        },
+        "aiTokenTracker.enabledProviders": {
+          "type": "array",
+          "default": ["copilot", "openai"],
+          "description": "Aktivierte AI-Provider",
+          "items": {
+            "type": "string",
+            "enum": ["copilot", "openai", "claude"]
+          }
+        },
+        "aiTokenTracker.autoCreateScopes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatisch Scopes für neue Dateien erstellen"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aiTokenTracker",
+          "title": "AI Token Tracker",
+          "icon": "$(graph)"
+        }
+      ]
+    },
+    "views": {
+      "aiTokenTracker": [
+        {
+          "id": "tokenScopeView",
+          "name": "Token Scopes",
+          "when": "true"
+        },
+        {
+          "id": "tokenUsageView",
+          "name": "Token Usage",
+          "when": "true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8"
+  },
+  "dependencies": {
+    "tiktoken": "^1.0.10"
+  }
+}
