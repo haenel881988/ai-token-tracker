@@ -39,6 +39,7 @@ const vscode = __importStar(require("vscode"));
 const scopeManager_1 = require("./core/scopeManager");
 const tokenCounter_1 = require("./core/tokenCounter");
 const configManager_1 = require("./core/configManager");
+const realtimeMonitor_1 = require("./core/realtimeMonitor");
 const statusBar_1 = require("./ui/statusBar");
 const notifications_1 = require("./ui/notifications");
 const logger_1 = require("./utils/logger");
@@ -57,6 +58,7 @@ const logger_1 = require("./utils/logger");
 let scopeManager;
 let tokenCounter;
 let configManager;
+let realtimeMonitor;
 let statusBarManager;
 let notificationManager;
 let logger;
@@ -67,6 +69,8 @@ function activate(context) {
     configManager = new configManager_1.ConfigManager();
     tokenCounter = new tokenCounter_1.TokenCounter();
     scopeManager = new scopeManager_1.ScopeManager(tokenCounter, configManager);
+    // Echtzeit-Monitor starten
+    realtimeMonitor = new realtimeMonitor_1.RealtimeTokenMonitor(scopeManager, tokenCounter);
     // UI Module initialisieren
     statusBarManager = new statusBar_1.StatusBarManager(scopeManager);
     notificationManager = new notifications_1.NotificationManager(scopeManager);
@@ -83,6 +87,7 @@ function deactivate() {
     // Cleanup
     statusBarManager?.dispose();
     scopeManager?.dispose();
+    realtimeMonitor?.dispose();
     logger.info('Extension deaktiviert.');
 }
 function registerCommands(context) {

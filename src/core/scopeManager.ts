@@ -53,6 +53,11 @@ export class ScopeManager implements IScopeManager {
      * Erstellt einen Datei-spezifischen Scope
      */
     createFileScope(filePath: string): TokenScope {
+        // Filter für unerwünschte Dateien
+        if (this.shouldIgnoreFile(filePath)) {
+            return null as any; // Skip ignored files
+        }
+
         const fileName = path.basename(filePath);
         const config: ScopeConfig = {
             name: `Datei: ${fileName}`,
@@ -65,6 +70,31 @@ export class ScopeManager implements IScopeManager {
         this.switchToScope(scope.id);
         
         return scope;
+    }
+
+    /**
+     * Prüft ob eine Datei ignoriert werden soll
+     */
+    private shouldIgnoreFile(filePath: string): boolean {
+        const ignoredPatterns = [
+            'COMMIT_EDITMSG',
+            'MERGE_MSG', 
+            'SQUASH_MSG',
+            '.git/',
+            'node_modules/',
+            '.vscode/',
+            'temp/',
+            'tmp/',
+            '.log',
+            '.cache'
+        ];
+
+        const fileName = path.basename(filePath);
+        const lowerPath = filePath.toLowerCase();
+
+        return ignoredPatterns.some(pattern => 
+            fileName.includes(pattern) || lowerPath.includes(pattern.toLowerCase())
+        );
     }
 
     /**

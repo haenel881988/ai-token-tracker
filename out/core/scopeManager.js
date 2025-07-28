@@ -77,6 +77,10 @@ class ScopeManager {
      * Erstellt einen Datei-spezifischen Scope
      */
     createFileScope(filePath) {
+        // Filter für unerwünschte Dateien
+        if (this.shouldIgnoreFile(filePath)) {
+            return null; // Skip ignored files
+        }
         const fileName = path.basename(filePath);
         const config = {
             name: `Datei: ${fileName}`,
@@ -87,6 +91,26 @@ class ScopeManager {
         this.activeFileScope = scope.id;
         this.switchToScope(scope.id);
         return scope;
+    }
+    /**
+     * Prüft ob eine Datei ignoriert werden soll
+     */
+    shouldIgnoreFile(filePath) {
+        const ignoredPatterns = [
+            'COMMIT_EDITMSG',
+            'MERGE_MSG',
+            'SQUASH_MSG',
+            '.git/',
+            'node_modules/',
+            '.vscode/',
+            'temp/',
+            'tmp/',
+            '.log',
+            '.cache'
+        ];
+        const fileName = path.basename(filePath);
+        const lowerPath = filePath.toLowerCase();
+        return ignoredPatterns.some(pattern => fileName.includes(pattern) || lowerPath.includes(pattern.toLowerCase()));
     }
     /**
      * Erstellt einen Projekt-Scope

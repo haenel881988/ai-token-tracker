@@ -3,6 +3,85 @@
 ## 🎯 Projektziel
 Eine VS Code Extension, die als "Kilometerzähler für Tokens" fungiert und Entwicklern hilft, Token-Verbrauch zu überwachen, bevor AI-Halluzinationen auftreten.
 
+## 🤖 AI-Integration Rules für Copilot
+
+### **WICHTIGE TOKEN-REGELN FÜR AI:**
+```json
+{
+  "aiTokenTracker.aiInstructions": {
+    "tokenAwareness": true,
+    "autoSplit": true,
+    "maxTokensPerRequest": 2000,
+    "warningThreshold": 75,
+    "criticalThreshold": 90,
+    "autoNewChatAt": 85,
+    "splitComplexTasks": true,
+    "includeTokenInfo": true
+  }
+}
+```
+
+### **AI-VERHALTEN BEI TOKEN-LIMITS:**
+
+#### 🟢 **0-50% Token-Auslastung:**
+- Normale Entwicklung möglich
+- Komplexe Refactorings erlaubt
+- Umfassende Code-Generierung OK
+
+#### 🟡 **50-75% Token-Auslastung:**
+- Präzisere Prompts verwenden
+- Aufgaben in kleinere Teile splitten
+- Weniger Kontext pro Request
+
+#### 🟠 **75-90% Token-Auslastung:**
+- **AUTOMATISCH:** Aufgaben in Sub-Tasks aufteilen
+- **AUTOMATISCH:** Neue Scopes erstellen
+- **AUTOMATISCH:** Chat-Split-Empfehlung anzeigen
+- Nur essentielle Code-Änderungen
+
+#### 🔴 **90%+ Token-Auslastung:**
+- **SOFORT:** Neuen Chat starten
+- **SOFORT:** Task in Unter-Verzeichnisse splitten
+- **SOFORT:** Todo-Liste erstellen
+- Keine großen Code-Änderungen mehr
+
+### **AUTOMATISCHE TASK-SPLITTING REGELN:**
+
+#### **Bei 75% Token-Auslastung:**
+```
+1. Aktuelle Aufgabe analysieren
+2. In logische Sub-Tasks aufteilen
+3. Neue Scope-Struktur erstellen:
+   - docs/01_current_task/
+   - docs/02_sub_task_a/
+   - docs/03_sub_task_b/
+   - docs/04_tests/
+   - docs/05_documentation/
+4. TODO.md mit Aufgabenliste erstellen
+5. Aktuellen Progress speichern
+6. Neuen Scope für ersten Sub-Task starten
+```
+
+#### **Task-Splitting Beispiel:**
+```markdown
+# TODO.md - Automatisch erstellt bei 75% Token-Auslastung
+
+## Haupt-Aufgabe: "Feature XY implementieren"
+- **Status:** Bei 75% Token-Limit aufgeteilt
+- **Ursprünglicher Scope:** feature_xy_main
+- **Aufgeteilt in:** 4 Sub-Tasks
+
+### 📋 Sub-Tasks:
+- [ ] 01_core_logic/ - Basis-Funktionalität
+- [ ] 02_ui_components/ - UI-Komponenten  
+- [ ] 03_api_integration/ - API-Anbindung
+- [ ] 04_tests_docs/ - Tests & Dokumentation
+
+### 🎯 Aktueller Focus:
+- **Active Scope:** 01_core_logic
+- **Next:** 02_ui_components nach Completion
+```
+
 ## 📋 Entwicklungsplan - Phasenweise Umsetzung
 
 ### Phase 1: Grundgerüst & Core-Module (Start hier!)

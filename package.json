@@ -2,7 +2,7 @@
   "name": "ai-token-tracker",
   "displayName": "AI Token Tracker",
   "description": "Überwache deinen AI Token-Verbrauch und verhindere Halluzinationen",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "publisher": "haenel881988",
   "engines": {
     "vscode": "^1.74.0"
@@ -89,6 +89,61 @@
           "type": "boolean",
           "default": true,
           "description": "Automatisch Scopes für neue Dateien erstellen"
+        },
+        "aiTokenTracker.aiInstructions": {
+          "type": "object",
+          "default": {
+            "tokenAwareness": true,
+            "autoSplit": true,
+            "maxTokensPerRequest": 2000,
+            "warningThreshold": 75,
+            "criticalThreshold": 90,
+            "autoNewChatAt": 85,
+            "splitComplexTasks": true,
+            "includeTokenInfo": true
+          },
+          "description": "AI-Verhalten bei Token-Limits"
+        },
+        "aiTokenTracker.ignoreFiles": {
+          "type": "array",
+          "default": [
+            "COMMIT_EDITMSG",
+            "MERGE_MSG",
+            "SQUASH_MSG",
+            ".git/",
+            "node_modules/",
+            ".vscode/",
+            "temp/",
+            "tmp/"
+          ],
+          "description": "Dateimuster die ignoriert werden sollen"
+        },
+        "aiTokenTracker.realtimeMonitoring": {
+          "type": "boolean", 
+          "default": true,
+          "description": "Echtzeit Token-Überwachung aktivieren"
+        },
+        "aiTokenTracker.chatRecommendations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatische Chat-Empfehlungen anzeigen"
+        },
+        "aiTokenTracker.preferredModel": {
+          "type": "string",
+          "default": "auto-detect",
+          "enum": [
+            "auto-detect",
+            "gpt-4o",
+            "gpt-4o-mini", 
+            "gpt-4-turbo",
+            "gpt-4",
+            "gpt-3.5-turbo",
+            "claude-3-5-sonnet",
+            "claude-3-opus",
+            "claude-3-haiku",
+            "github-copilot"
+          ],
+          "description": "Bevorzugtes AI-Modell für Token-Berechnung"
         }
       }
     },

@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { ScopeManager } from './core/scopeManager';
 import { TokenCounter } from './core/tokenCounter';
 import { ConfigManager } from './core/configManager';
+import { RealtimeTokenMonitor } from './core/realtimeMonitor';
 import { StatusBarManager } from './ui/statusBar';
 import { NotificationManager } from './ui/notifications';
 import { Logger } from './utils/logger';
@@ -22,6 +23,7 @@ import { Logger } from './utils/logger';
 let scopeManager: ScopeManager;
 let tokenCounter: TokenCounter;
 let configManager: ConfigManager;
+let realtimeMonitor: RealtimeTokenMonitor;
 let statusBarManager: StatusBarManager;
 let notificationManager: NotificationManager;
 let logger: Logger;
@@ -34,6 +36,9 @@ export function activate(context: vscode.ExtensionContext) {
     configManager = new ConfigManager();
     tokenCounter = new TokenCounter();
     scopeManager = new ScopeManager(tokenCounter, configManager);
+    
+    // Echtzeit-Monitor starten
+    realtimeMonitor = new RealtimeTokenMonitor(scopeManager, tokenCounter);
     
     // UI Module initialisieren
     statusBarManager = new StatusBarManager(scopeManager);
@@ -57,6 +62,7 @@ export function deactivate() {
     // Cleanup
     statusBarManager?.dispose();
     scopeManager?.dispose();
+    realtimeMonitor?.dispose();
     
     logger.info('Extension deaktiviert.');
 }
