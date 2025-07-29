@@ -6,6 +6,10 @@ import { RealtimeTokenMonitor } from './core/realtimeMonitor';
 import { CopilotAutoConsolidator } from './core/copilotIntegration';
 import { ProjectSetupManager } from './core/projectSetupManager';
 import { ComplexityManager } from './core/complexityManager';
+import { AISelfRegulationEngine } from './core/aiSelfRegulationEngine';
+import { AIBehaviorManager } from './core/aiBehaviorManager';
+import { ContextAuditor } from './core/contextAuditor';
+import { ProjectInventoryManager, ensureInstructionsRule } from './core/projectInventoryManager';
 import { StatusBarManager } from './ui/statusBar';
 import { NotificationManager } from './ui/notifications';
 import { Logger } from './utils/logger';
@@ -30,8 +34,12 @@ let realtimeMonitor: RealtimeTokenMonitor;
 let copilotAutoConsolidator: CopilotAutoConsolidator;
 let projectSetupManager: ProjectSetupManager;
 let complexityManager: ComplexityManager;
+let aiRegulationEngine: AISelfRegulationEngine;
+let aiBehaviorManager: AIBehaviorManager;
+let contextAuditor: ContextAuditor;
 let statusBarManager: StatusBarManager;
 let notificationManager: NotificationManager;
+let projectInventoryManager: ProjectInventoryManager;
 let logger: Logger;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -53,6 +61,14 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Complexity Manager initialisieren
     complexityManager = new ComplexityManager(workspacePath, tokenCounter);
+
+    // AI Engines initialisieren
+    aiRegulationEngine = new AISelfRegulationEngine();
+    aiBehaviorManager = new AIBehaviorManager();
+    contextAuditor = new ContextAuditor(tokenCounter, aiBehaviorManager, configManager);
+
+    // Projekt-Inventarisierungsmodul initialisieren
+    projectInventoryManager = new ProjectInventoryManager();
 
     // Core Module initialisieren
     configManager = new ConfigManager();
@@ -204,6 +220,7 @@ function registerCommands(context: vscode.ExtensionContext) {
         createGithubSetup,
         analyzeComplexity,
         findDuplicates
+        // Die alten Commands wurden hier entfernt
     );
 }
 
@@ -216,7 +233,7 @@ function registerEventListeners(context: vscode.ExtensionContext) {
         }
     });
 
-    // Text-Änderungen überwachen (für Token-Counting)
+    // Text-Änderungen überwachen (für Token-Counting) - KEIN Automatismus mehr!
     const onDidChangeTextDocument = vscode.workspace.onDidChangeTextDocument((event) => {
         if (event.document === vscode.window.activeTextEditor?.document) {
             // Debounced Token-Update

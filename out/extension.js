@@ -43,6 +43,7 @@ const realtimeMonitor_1 = require("./core/realtimeMonitor");
 const copilotIntegration_1 = require("./core/copilotIntegration");
 const projectSetupManager_1 = require("./core/projectSetupManager");
 const complexityManager_1 = require("./core/complexityManager");
+const aiSelfRegulationEngine_1 = require("./core/aiSelfRegulationEngine");
 const statusBar_1 = require("./ui/statusBar");
 const notifications_1 = require("./ui/notifications");
 const logger_1 = require("./utils/logger");
@@ -65,6 +66,7 @@ let realtimeMonitor;
 let copilotAutoConsolidator;
 let projectSetupManager;
 let complexityManager;
+let aiRegulationEngine;
 let statusBarManager;
 let notificationManager;
 let logger;
@@ -84,6 +86,8 @@ function activate(context) {
     });
     // Complexity Manager initialisieren
     complexityManager = new complexityManager_1.ComplexityManager(workspacePath, tokenCounter);
+    // AI Self-Regulation Engine initialisieren
+    aiRegulationEngine = new aiSelfRegulationEngine_1.AISelfRegulationEngine();
     // Core Module initialisieren
     configManager = new configManager_1.ConfigManager();
     tokenCounter = new tokenCounter_1.TokenCounter();
@@ -203,7 +207,43 @@ function registerCommands(context) {
             }
         }
     });
-    context.subscriptions.push(showDashboard, resetCounters, createScope, toggleCopilotIntegration, manualCopilotConsolidation, modularizeProject, createGithubSetup, analyzeComplexity, findDuplicates);
+    // KI-Selbstregulierung Commands
+    const enforceAIRules = vscode.commands.registerCommand('aiTokenTracker.enforceAIRules', async () => {
+        if (aiRegulationEngine) {
+            const canProceed = await aiRegulationEngine.enforceTokenCheckRule();
+            if (canProceed) {
+                vscode.window.showInformationMessage('✅ KI-Regeln durchgesetzt - Token-Status OK');
+            }
+            else {
+                vscode.window.showWarningMessage('⚠️ Token-Limit kritisch - KI-Aktion blockiert');
+            }
+        }
+    });
+    const checkAICompliance = vscode.commands.registerCommand('aiTokenTracker.checkAICompliance', async () => {
+        if (aiRegulationEngine) {
+            const report = await aiRegulationEngine.monitorAIBehavior();
+            const message = `🤖 KI-Verhalten Report:\n` +
+                `Compliance Score: ${(report.complianceScore * 100).toFixed(1)}%\n` +
+                `Token-Bewusstsein: ${report.tokenAwareness}\n` +
+                `Status: ${report.behaviorStatus}`;
+            vscode.window.showInformationMessage(message);
+        }
+    });
+    const optimizeAIBehavior = vscode.commands.registerCommand('aiTokenTracker.optimizeAIBehavior', async () => {
+        if (aiRegulationEngine) {
+            await aiRegulationEngine.enforceChatSplitRule();
+            const optimization = await aiRegulationEngine.proactiveOptimization();
+            vscode.window.showInformationMessage(`🎯 KI-Verhalten optimiert!\n${Math.round(optimization.totalTokensSaved)} Tokens gespart`);
+        }
+    });
+    const forceTokenAwareness = vscode.commands.registerCommand('aiTokenTracker.forceTokenAwareness', async () => {
+        if (aiRegulationEngine) {
+            await aiRegulationEngine.enforceTokenCheckRule();
+            await aiRegulationEngine.enforceChatSplitRule();
+            vscode.window.showInformationMessage('🧠 Token-Bewusstsein aktiviert - KI arbeitet jetzt token-optimiert');
+        }
+    });
+    context.subscriptions.push(showDashboard, resetCounters, createScope, toggleCopilotIntegration, manualCopilotConsolidation, modularizeProject, createGithubSetup, analyzeComplexity, findDuplicates, enforceAIRules, checkAICompliance, optimizeAIBehavior, forceTokenAwareness);
 }
 function registerEventListeners(context) {
     // Datei-Änderungen überwachen

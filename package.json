@@ -97,6 +97,30 @@
         "title": "🔄 Duplikate finden",
         "category": "AI Token Tracker",
         "icon": "$(files)"
+      },
+      {
+        "command": "aiTokenTracker.enforceAIRules",
+        "title": "🤖 KI-Regeln durchsetzen",
+        "category": "AI Token Tracker",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "aiTokenTracker.checkAICompliance",
+        "title": "📋 KI-Regelkonformität prüfen", 
+        "category": "AI Token Tracker",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "aiTokenTracker.optimizeAIBehavior",
+        "title": "🎯 KI-Verhalten optimieren",
+        "category": "AI Token Tracker",
+        "icon": "$(target)"
+      },
+      {
+        "command": "aiTokenTracker.forceTokenAwareness",
+        "title": "🧠 Token-Bewusstsein erzwingen",
+        "category": "AI Token Tracker", 
+        "icon": "$(brain)"
       }
     ],
     "configuration": {
